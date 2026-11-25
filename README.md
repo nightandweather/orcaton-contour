@@ -9,7 +9,7 @@
 
 ## 한국어
 
-CT에 장기와 표적의 윤곽을 그리고 고치는 데스크톱 프로그램입니다(Windows, macOS). 영상은 컴퓨터 밖으로 나가지 않습니다.
+CT를 비롯한 의료 영상(MR·PET·X선·초음파, 병리 슬라이드, 수술 영상)에 윤곽을 그리고 고치는 데스크톱 프로그램입니다(Windows, macOS). 영상은 컴퓨터 밖으로 나가지 않습니다.
 
 ### 할 수 있는 것
 
@@ -19,6 +19,9 @@ CT에 장기와 표적의 윤곽을 그리고 고치는 데스크톱 프로그�
 - **윤곽 QA와 살펴볼 곳**: 이름 규칙, 빠진 슬라이스, 겹침, 떨어진 조각, 구멍 등을 항목별로 보여 주고 보고서(HTML·CSV·PDF)로 저장합니다.
 - **읽기·쓰기**: DICOM RTSTRUCT, DICOM SEG, NIfTI 라벨 맵, Slicer `.seg.nrrd`. 표면은 STL·OBJ·PLY·VTK로 내보냅니다.
 - **명령줄 도구** `orcaton-contour`: 변환, 통계, QA, 그림, 편집, 비교, 자동 윤곽, 일괄 처리. 결과를 JSON으로 냅니다.
+- **여러 영상 종류(0.7.1)**: DICOM MR·PET(SUV)·X선·유방촬영·Enhanced 다중 프레임, 초음파·혈관조영 시네, 시상·관상 시리즈. MR은 공개 무릎 MR로 다른 프로그램과 비교해 확인했고, PET과 X선은 만들어 낸 시험 파일로만 확인했습니다.
+- **병리 슬라이드(0.7.1)**: SVS·타일 TIFF·DICOM WSI를 필요한 부분만 읽어 열고, 다각형·자유곡선·점으로 클래스별 주석을 달아 GeoJSON(QuPath 형식)으로 주고받습니다.
+- **창과 터미널(0.7.1)**: 어느 도구에서든 우클릭한 채 끌어 창(밝기·대비)을 바꾸고 위쪽 막대에서 프리셋을 고릅니다. 위쪽 막대의 터미널 단추로 바로 셸을 엽니다.
 - **수술 영상(0.7.0, 시험 단계)**: MP4/MOV를 프레임 단위로 넘기며 클래스별 마스크를 그리고, 사이를 보간으로 채우고, 수술 단계를 표시하고, 영상 QA 뒤 PNG 마스크·단계 CSV·manifest로 내보냅니다. 영상은 이 컴퓨터를 떠나지 않습니다.
 - **어시스턴트(0.6.0)**: 직접 설정한 모델 API(OpenAI, Anthropic(Claude), OpenRouter 같은 호스팅 서비스, 또는 이 컴퓨터의 Ollama·LM Studio)에 한국어나 영어로 부탁하면 편집기의 기능으로 일하고, 고친 것은 미리보기로 보여 준 뒤 받아들일 때만 반영됩니다. 기본은 꺼짐.
 - **에이전트와 함께 작업(0.6.0)**: 증례 폴더를 공유하고, 프로그램 안의 터미널에서 직접 설치한 AI 에이전트(Claude Code, Codex CLI 등)를 실행합니다. Windows·macOS.
@@ -76,7 +79,7 @@ Windows 11 Pro 시험 PC에서는 경고 없이 설치 마법사가 열렸습니
 
 ## English
 
-A desktop program for drawing and correcting contours of organs and targets on CT (Windows, macOS). Images never leave the computer.
+A desktop program for drawing and correcting contours on CT and other medical images (MR, PET, X-ray, ultrasound, pathology slides, surgical video) (Windows, macOS). Images never leave the computer.
 
 ### What it does
 
@@ -86,6 +89,9 @@ A desktop program for drawing and correcting contours of organs and targets on C
 - **Contour QA and places to look at**: naming rules, missing slices, overlaps, detached pieces, holes and more, listed finding by finding, with reports as HTML, CSV and PDF.
 - **In and out**: DICOM RTSTRUCT, DICOM SEG, NIfTI label maps, Slicer `.seg.nrrd`. Surfaces as STL, OBJ, PLY and VTK.
 - **Command-line tool** `orcaton-contour`: conversion, statistics, QA, pictures, editing, comparison, automatic contouring, batches. JSON output.
+- **More image kinds (0.7.1)**: DICOM MR, PET (SUV), X-ray, mammography, enhanced multi-frame, ultrasound and angiography cine, sagittal and coronal series. MR was checked against other software with a public knee MR; PET and X-ray with generated test files only.
+- **Pathology slides (0.7.1)**: SVS, tiled TIFF and DICOM WSI, read only where you look; annotate with polygons, freehand outlines and points in classes and exchange them as GeoJSON the way QuPath writes it.
+- **Window and terminal (0.7.1)**: change the window (brightness/contrast) with a right-drag in any tool and pick presets in the top bar; a Terminal button in the top bar opens a shell at once.
 - **Surgical video (0.7.0, early)**: step through MP4/MOV frame by frame, draw class masks, fill between, mark surgical phases, run the video QA and export PNG masks, phase CSVs and a manifest. The video never leaves the computer.
 - **Assistant (0.6.0)**: ask a model API you set up yourself (hosted such as OpenAI, Anthropic (Claude) or OpenRouter, or Ollama / LM Studio on this computer) in Korean or English; it works through the editor's functions and shows its changes as a preview that applies only when you accept. Off by default.
 - **Working with an agent (0.6.0)**: share the case through a folder and run an AI agent you installed (Claude Code, Codex CLI …) in the terminal inside the program. Windows and macOS.

@@ -30,8 +30,8 @@ CT를 비롯한 의료 영상(MR·PET·X선·초음파, 병리 슬라이드, 수
 ### 처음 실행할 때 (orcaton.com 계정으로 로그인)
 
 1. [orcaton.com](https://orcaton.com)에 구글 계정으로 가입합니다.
-2. 프로그램을 설치하고 실행합니다. 로그인 화면의 **토큰 페이지 열기**로 orcaton.com에서 **Orcaton Contour 전용** 토큰을 만들어 붙여 넣습니다.
-3. 토큰을 붙여 넣으면 프로그램이 열리고 **2주 무료 체험**이 시작됩니다(토큰의 유효 기간과는 따로입니다). 체험이 끝나면 받은 코드를 넣어 이어서 쓰거나, 프로그램의 **사용 신청**으로 메모와 함께 요청합니다. 구매는 준비 중입니다.
+2. 프로그램을 설치하고 실행합니다. 로그인 화면에서 **브라우저로 로그인**을 누르고, 열린 orcaton.com 화면에서 **로그인**을 누릅니다(0.7.5부터). 또는 **토큰 페이지 열기**로 **Orcaton Contour 전용** 토큰을 만들어 붙여 넣습니다.
+3. 로그인하면 프로그램이 열리고 **2주 무료 체험**이 시작됩니다(토큰의 유효 기간과는 따로입니다). 체험이 끝나면 받은 코드를 넣어 이어서 쓰거나, 프로그램의 **사용 신청**으로 메모와 함께 요청합니다. 구매는 준비 중입니다.
 
 문의는 **kanghoun@orcaton.com** 으로 보내 주세요.
 
@@ -67,6 +67,7 @@ Windows 11 Pro 시험 PC에서는 경고 없이 설치 마법사가 열렸습니
 - 영상과 파일 이름은 이 컴퓨터 밖으로 나가지 않습니다. 텔레메트리와 오류 보고가 없고, 묻지 않고 받는 업데이트도 없습니다.
 - 기본으로 밖으로 나가는 요청은 계정 확인 하나뿐입니다: `GET https://orcaton.com/api/cli/v1/me`, 토큰과 앱 이름·버전만 보냅니다.
 - 새 버전은 계정 확인의 답으로 알려 줍니다. '업데이트'를 누를 때만 이 저장소의 Releases(GitHub)에서 받고, 받은 파일의 해시를 확인한 뒤 다시 시작할 때 설치합니다(0.7.4부터).
+- '브라우저로 로그인'을 누르면 그때만 orcaton.com 확인 화면을 브라우저로 열고, 확인한 뒤 일회용 코드와 확인값을 보내 토큰을 받습니다. 브라우저 주소에는 이 컴퓨터의 포트와 임시값만 들어갑니다(0.7.5부터).
 - 사용 신청이나 코드 등록을 직접 누르면 그때 한 번 orcaton.com으로 보냅니다: 토큰과 적은 메모·앱 버전, 또는 코드만.
 - 어시스턴트를 켜면, 켜 둔 동안 대화와 구조의 이름·수치(허용했을 때만 잘라 낸 CT 그림)가 직접 정한 주소 한 곳으로 갑니다. 환자 영상에는 클라우드 모델을 쓰지 마십시오.
 - 내장 터미널에서 실행한 프로그램이 보내는 것은 그 프로그램이 하는 일입니다.
@@ -103,8 +104,8 @@ A desktop program for drawing and correcting contours on CT and other medical im
 ### The first time you run it (sign in with an orcaton.com account)
 
 1. Sign up at [orcaton.com](https://orcaton.com) with a Google account.
-2. Install the program and start it. **Open the token page** on the sign-in screen takes you to orcaton.com to create an **Orcaton Contour only** token; paste it into the program.
-3. The program opens and a **two-week free trial** starts (separate from the token's own lifetime). After the trial, enter a code you received to keep using it, or send an **access request** with a note from the program. Purchase is not available yet.
+2. Install the program and start it. Press **Sign in with the browser** on the sign-in screen and confirm on the orcaton.com page that opens (from 0.7.5). Or use **Open the token page** to create an **Orcaton Contour only** token and paste it into the program.
+3. Once signed in, the program opens and a **two-week free trial** starts (separate from the token's own lifetime). After the trial, enter a code you received to keep using it, or send an **access request** with a note from the program. Purchase is not available yet.
 
 Questions: **kanghoun@orcaton.com**
 
@@ -140,6 +141,7 @@ The xattr command that earlier unsigned builds needed is no longer needed. Check
 - Images and file names never leave this computer. No telemetry, no error reports, and nothing is updated without you asking.
 - By default the only outgoing request is the account check: `GET https://orcaton.com/api/cli/v1/me`, carrying the token and the app's name and version only.
 - A new version is announced in the answer to the account check. Only when you press Update is it fetched from this repository's Releases (GitHub), its hash checked, and installed when the program restarts (from 0.7.4).
+- Only when you press Sign in with the browser does the program open the orcaton.com confirmation page in your browser; after you confirm, it sends a one-time code and its check value to get a token. The browser address carries only a local port and one-time values (from 0.7.5).
 - An access request or code you send yourself goes to orcaton.com once: the token with your note and the app's version, or the code.
 - With the assistant turned on, the conversation and the structures' names and figures (cropped CT pictures only if allowed) go to the one address you set. Do not use cloud models with patient images.
 - What a program you start in the built-in terminal sends is that program's doing.

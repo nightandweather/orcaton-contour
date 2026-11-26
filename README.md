@@ -45,7 +45,7 @@ CT를 비롯한 의료 영상(MR·PET·X선·초음파, 병리 슬라이드, 수
 | macOS (Apple Silicon: M1 이후) | `Orcaton-Contour-<버전>-mac-arm64.dmg` |
 | macOS (Intel) | `Orcaton-Contour-<버전>-mac-x64.dmg` |
 
-각 파일의 SHA-256은 릴리스 설명에 있습니다.
+각 파일의 SHA-256은 릴리스 설명에 있습니다. 릴리스의 .zip과 .yml 파일은 프로그램 안 업데이트용입니다. 0.7.4부터는 새 버전이 나오면 프로그램의 '업데이트' 단추로 받을 수 있고, 0.7.3 이전에서는 한 번 손으로 설치합니다.
 
 macOS용은 Apple의 공증을 받은 서명 빌드입니다(Developer ID: kanghoun lee). **Windows용은 아직 서명되지 않은 빌드입니다.**
 
@@ -64,8 +64,9 @@ Windows 11 Pro 시험 PC에서는 경고 없이 설치 마법사가 열렸습니
 
 ### 개인정보
 
-- 영상과 파일 이름은 이 컴퓨터 밖으로 나가지 않습니다. 텔레메트리, 자동 업데이트, 오류 보고가 없습니다.
+- 영상과 파일 이름은 이 컴퓨터 밖으로 나가지 않습니다. 텔레메트리와 오류 보고가 없고, 묻지 않고 받는 업데이트도 없습니다.
 - 기본으로 밖으로 나가는 요청은 계정 확인 하나뿐입니다: `GET https://orcaton.com/api/cli/v1/me`, 토큰과 앱 이름·버전만 보냅니다.
+- 새 버전은 계정 확인의 답으로 알려 줍니다. '업데이트'를 누를 때만 이 저장소의 Releases(GitHub)에서 받고, 받은 파일의 해시를 확인한 뒤 다시 시작할 때 설치합니다(0.7.4부터).
 - 사용 신청이나 코드 등록을 직접 누르면 그때 한 번 orcaton.com으로 보냅니다: 토큰과 적은 메모·앱 버전, 또는 코드만.
 - 어시스턴트를 켜면, 켜 둔 동안 대화와 구조의 이름·수치(허용했을 때만 잘라 낸 CT 그림)가 직접 정한 주소 한 곳으로 갑니다. 환자 영상에는 클라우드 모델을 쓰지 마십시오.
 - 내장 터미널에서 실행한 프로그램이 보내는 것은 그 프로그램이 하는 일입니다.
@@ -117,7 +118,7 @@ Download from [Releases](https://github.com/nightandweather/orcaton-contour/rele
 | macOS (Apple Silicon: M1 and later) | `Orcaton-Contour-<version>-mac-arm64.dmg` |
 | macOS (Intel) | `Orcaton-Contour-<version>-mac-x64.dmg` |
 
-The SHA-256 of every file is in the release notes.
+The SHA-256 of every file is in the release notes. The release's .zip and .yml files are for in-program updates. From 0.7.4 on, a new version can be installed with the program's Update button; from 0.7.3 or older, install 0.7.4 by hand once.
 
 The macOS builds are signed and notarised by Apple (Developer ID: kanghoun lee). **The Windows build is not signed yet.**
 
@@ -136,8 +137,9 @@ The xattr command that earlier unsigned builds needed is no longer needed. Check
 
 ### Privacy
 
-- Images and file names never leave this computer. No telemetry, no automatic updates, no error reports.
+- Images and file names never leave this computer. No telemetry, no error reports, and nothing is updated without you asking.
 - By default the only outgoing request is the account check: `GET https://orcaton.com/api/cli/v1/me`, carrying the token and the app's name and version only.
+- A new version is announced in the answer to the account check. Only when you press Update is it fetched from this repository's Releases (GitHub), its hash checked, and installed when the program restarts (from 0.7.4).
 - An access request or code you send yourself goes to orcaton.com once: the token with your note and the app's version, or the code.
 - With the assistant turned on, the conversation and the structures' names and figures (cropped CT pictures only if allowed) go to the one address you set. Do not use cloud models with patient images.
 - What a program you start in the built-in terminal sends is that program's doing.

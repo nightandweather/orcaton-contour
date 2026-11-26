@@ -19,7 +19,8 @@ CT를 비롯한 의료 영상(MR·PET·X선·초음파, 병리 슬라이드, 수
 - **윤곽 QA와 살펴볼 곳**: 이름 규칙, 빠진 슬라이스, 겹침, 떨어진 조각, 구멍 등을 항목별로 보여 주고 보고서(HTML·CSV·PDF)로 저장합니다.
 - **읽기·쓰기**: DICOM RTSTRUCT, DICOM SEG, NIfTI 라벨 맵, Slicer `.seg.nrrd`. 표면은 STL·OBJ·PLY·VTK로 내보냅니다.
 - **명령줄 도구** `orcaton-contour`: 변환, 통계, QA, 그림, 편집, 비교, 자동 윤곽, 일괄 처리. 결과를 JSON으로 냅니다.
-- **여러 영상 종류(0.7.1)**: DICOM MR·PET(SUV)·X선·유방촬영·Enhanced 다중 프레임, 초음파·혈관조영 시네, 시상·관상 시리즈. MR은 공개 무릎 MR로 다른 프로그램과 비교해 확인했고, PET과 X선은 만들어 낸 시험 파일로만 확인했습니다.
+- **컨투어 표시(0.7.2)**: 구조·클래스 목록 아래에서 채움·연하게·선만과 진하기를 고르고, C 키로 바꿉니다. CT·영상·슬라이드 모두.
+- **여러 영상 종류(0.7.1)**: DICOM MR·PET(SUV)·X선·유방촬영·Enhanced 다중 프레임, 초음파·혈관조영 시네, 시상·관상 시리즈. MR은 공개 무릎 MR로 다른 프로그램과 비교했고, 공개 전신 FDG PET의 SUV는 따로 계산한 값과 0.005 이내, 흉부 X선과 유방촬영은 pydicom과 픽셀이 같음을 확인했습니다.
 - **병리 슬라이드(0.7.1)**: SVS·타일 TIFF·DICOM WSI를 필요한 부분만 읽어 열고, 다각형·자유곡선·점으로 클래스별 주석을 달아 GeoJSON(QuPath 형식)으로 주고받습니다.
 - **창과 터미널(0.7.1)**: 어느 도구에서든 우클릭한 채 끌어 창(밝기·대비)을 바꾸고 위쪽 막대에서 프리셋을 고릅니다. 위쪽 막대의 터미널 단추로 바로 셸을 엽니다.
 - **수술 영상(0.7.0, 시험 단계)**: MP4/MOV를 프레임 단위로 넘기며 클래스별 마스크를 그리고, 사이를 보간으로 채우고, 수술 단계를 표시하고, 영상 QA 뒤 PNG 마스크·단계 CSV·manifest로 내보냅니다. 영상은 이 컴퓨터를 떠나지 않습니다.
@@ -29,8 +30,8 @@ CT를 비롯한 의료 영상(MR·PET·X선·초음파, 병리 슬라이드, 수
 ### 처음 실행할 때 (orcaton.com 계정으로 로그인)
 
 1. [orcaton.com](https://orcaton.com)에 구글 계정으로 가입합니다.
-2. 프로그램을 설치하고 실행합니다. 로그인 화면의 **토큰 페이지 열기**로 orcaton.com에서 토큰을 만들어 붙여 넣습니다(권한은 **조회**만).
-3. 프로그램이 열립니다. 지금은 따로 신청하거나 승인을 기다릴 필요가 없습니다.
+2. 프로그램을 설치하고 실행합니다. 로그인 화면의 **토큰 페이지 열기**로 orcaton.com에서 **Orcaton Contour 전용** 토큰을 만들어 붙여 넣습니다.
+3. 토큰을 붙여 넣으면 프로그램이 열리고 **2주 무료 체험**이 시작됩니다(토큰의 유효 기간과는 따로입니다). 체험이 끝나면 받은 코드를 넣어 이어서 쓰거나, 프로그램의 **사용 신청**으로 메모와 함께 요청합니다. 구매는 준비 중입니다.
 
 문의는 **kanghoun@orcaton.com** 으로 보내 주세요.
 
@@ -65,6 +66,7 @@ Windows 11 Pro 시험 PC에서는 경고 없이 설치 마법사가 열렸습니
 
 - 영상과 파일 이름은 이 컴퓨터 밖으로 나가지 않습니다. 텔레메트리, 자동 업데이트, 오류 보고가 없습니다.
 - 기본으로 밖으로 나가는 요청은 계정 확인 하나뿐입니다: `GET https://orcaton.com/api/cli/v1/me`, 토큰과 앱 이름·버전만 보냅니다.
+- 사용 신청이나 코드 등록을 직접 누르면 그때 한 번 orcaton.com으로 보냅니다: 토큰과 적은 메모·앱 버전, 또는 코드만.
 - 어시스턴트를 켜면, 켜 둔 동안 대화와 구조의 이름·수치(허용했을 때만 잘라 낸 CT 그림)가 직접 정한 주소 한 곳으로 갑니다. 환자 영상에는 클라우드 모델을 쓰지 마십시오.
 - 내장 터미널에서 실행한 프로그램이 보내는 것은 그 프로그램이 하는 일입니다.
 - 한 번 확인되면 인터넷 없이 30일 동안 쓸 수 있습니다.
@@ -89,7 +91,8 @@ A desktop program for drawing and correcting contours on CT and other medical im
 - **Contour QA and places to look at**: naming rules, missing slices, overlaps, detached pieces, holes and more, listed finding by finding, with reports as HTML, CSV and PDF.
 - **In and out**: DICOM RTSTRUCT, DICOM SEG, NIfTI label maps, Slicer `.seg.nrrd`. Surfaces as STL, OBJ, PLY and VTK.
 - **Command-line tool** `orcaton-contour`: conversion, statistics, QA, pictures, editing, comparison, automatic contouring, batches. JSON output.
-- **More image kinds (0.7.1)**: DICOM MR, PET (SUV), X-ray, mammography, enhanced multi-frame, ultrasound and angiography cine, sagittal and coronal series. MR was checked against other software with a public knee MR; PET and X-ray with generated test files only.
+- **Contour display (0.7.2)**: Filled, Faint or Outline with a strength slider under every structure or class list; the C key cycles them. In CT, video and slide modes.
+- **More image kinds (0.7.1)**: DICOM MR, PET (SUV), X-ray, mammography, enhanced multi-frame, ultrasound and angiography cine, sagittal and coronal series. MR was checked against other software with a public knee MR; on public data, whole-body FDG PET SUV is within 0.005 of an independent calculation, and chest X-ray and mammogram pixels equal pydicom's.
 - **Pathology slides (0.7.1)**: SVS, tiled TIFF and DICOM WSI, read only where you look; annotate with polygons, freehand outlines and points in classes and exchange them as GeoJSON the way QuPath writes it.
 - **Window and terminal (0.7.1)**: change the window (brightness/contrast) with a right-drag in any tool and pick presets in the top bar; a Terminal button in the top bar opens a shell at once.
 - **Surgical video (0.7.0, early)**: step through MP4/MOV frame by frame, draw class masks, fill between, mark surgical phases, run the video QA and export PNG masks, phase CSVs and a manifest. The video never leaves the computer.
@@ -99,8 +102,8 @@ A desktop program for drawing and correcting contours on CT and other medical im
 ### The first time you run it (sign in with an orcaton.com account)
 
 1. Sign up at [orcaton.com](https://orcaton.com) with a Google account.
-2. Install the program and start it. **Open the token page** on the sign-in screen takes you to orcaton.com to create a token (the **read** permission is enough); paste it into the program.
-3. The program opens. For now there is nothing to request and no approval to wait for.
+2. Install the program and start it. **Open the token page** on the sign-in screen takes you to orcaton.com to create an **Orcaton Contour only** token; paste it into the program.
+3. The program opens and a **two-week free trial** starts (separate from the token's own lifetime). After the trial, enter a code you received to keep using it, or send an **access request** with a note from the program. Purchase is not available yet.
 
 Questions: **kanghoun@orcaton.com**
 
@@ -135,6 +138,7 @@ The xattr command that earlier unsigned builds needed is no longer needed. Check
 
 - Images and file names never leave this computer. No telemetry, no automatic updates, no error reports.
 - By default the only outgoing request is the account check: `GET https://orcaton.com/api/cli/v1/me`, carrying the token and the app's name and version only.
+- An access request or code you send yourself goes to orcaton.com once: the token with your note and the app's version, or the code.
 - With the assistant turned on, the conversation and the structures' names and figures (cropped CT pictures only if allowed) go to the one address you set. Do not use cloud models with patient images.
 - What a program you start in the built-in terminal sends is that program's doing.
 - After one successful check the program works offline for 30 days.

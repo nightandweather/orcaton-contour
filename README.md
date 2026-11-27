@@ -16,6 +16,7 @@ CT를 비롯한 의료 영상(MR·PET·X선·초음파, 병리 슬라이드, 수
 - **CT 열기**: NIfTI, DICOM 폴더(압축 포함), NRRD, MetaImage. 축상면·관상면·시상면과 3차원 보기.
 - **윤곽 그리기**: 붓·지우개, 다각형, 가위, 영역 채우기, 임계값, 여백, 다듬기, 슬라이스 사이 보간. 실행 취소 200단계.
 - **자동 윤곽**: 모델 파일을 설치하면 이 컴퓨터 안에서만 계산합니다. 임상 사용에 대해 검증되지 않았으며 결과는 반드시 검토해야 합니다.
+- **자동 윤곽 프리셋(0.7.7)**: 두경부, 흉부·폐, 유방, 복부, 골반(남·여)을 고르면 모델에 있는 위험 장기가 골라지고(TG-263 이름), 모델에 없는 구조는 따로 보여 줍니다. 고른 조합을 이름 붙여 저장하고, 명령줄은 `segment --preset`입니다. 부위별 목록은 임상 프로토콜이 아닙니다.
 - **윤곽 QA와 살펴볼 곳**: 이름 규칙, 빠진 슬라이스, 겹침, 떨어진 조각, 구멍 등을 항목별로 보여 주고 보고서(HTML·CSV·PDF)로 저장합니다.
 - **읽기·쓰기**: DICOM RTSTRUCT, DICOM SEG, NIfTI 라벨 맵, Slicer `.seg.nrrd`. 표면은 STL·OBJ·PLY·VTK로 내보냅니다.
 - **명령줄 도구** `orcaton-contour`: 변환, 통계, QA, 그림, 편집, 비교, 자동 윤곽, 일괄 처리. 결과를 JSON으로 냅니다.
@@ -26,7 +27,7 @@ CT를 비롯한 의료 영상(MR·PET·X선·초음파, 병리 슬라이드, 수
 - **수술 영상(0.7.0, 시험 단계)**: MP4/MOV를 프레임 단위로 넘기며 클래스별 마스크를 그리고, 사이를 보간으로 채우고, 수술 단계를 표시하고, 영상 QA 뒤 PNG 마스크·단계 CSV·manifest로 내보냅니다. 영상 파일은 이 컴퓨터를 떠나지 않습니다.
 - **영상 모델로 그리기(0.7.6, 시험 단계)**: 그림을 보는 모델은 물체 위치(상자)만 짚고, 직접 받아 설치한 SAM 2.1 tiny(Meta, Apache-2.0)가 이 컴퓨터에서 앞 프레임을 따라 그립니다. 직접 그린 프레임이 있으면 거기서 시작합니다. 정확도는 영상마다 크게 다르며, 그린 프레임은 모두 '검토 전'으로 표시됩니다.
 - **어시스턴트(0.6.0)**: 직접 설정한 모델 API(OpenAI, Anthropic(Claude), OpenRouter 같은 호스팅 서비스, 또는 이 컴퓨터의 Ollama·LM Studio)에 한국어나 영어로 부탁하면 편집기의 기능으로 일하고, 고친 것은 미리보기로 보여 준 뒤 받아들일 때만 반영됩니다. 기본은 꺼짐.
-- **에이전트와 함께 작업(0.6.0)**: 증례 폴더를 공유하고, 프로그램 안의 터미널에서 직접 설치한 AI 에이전트(Claude Code, Codex CLI 등)를 실행합니다. Windows·macOS.
+- **에이전트와 함께 작업(0.6.0)**: 증례 폴더를 공유하고, 프로그램 안의 터미널에서 직접 설치한 AI 에이전트(Claude Code, Codex CLI 등)를 실행합니다. Windows·macOS·Linux(0.7.7부터).
 
 ### 처음 실행할 때 (orcaton.com 계정으로 로그인)
 
@@ -92,6 +93,7 @@ A desktop program for drawing and correcting contours on CT and other medical im
 - **Opens CT**: NIfTI, DICOM folders (compressed too), NRRD, MetaImage. Axial, coronal and sagittal views and a 3-D view.
 - **Contouring**: brush and eraser, polygon, scissors, region fill, threshold, margin, smoothing, interpolation between slices. Undo up to 200 steps.
 - **Automatic contouring**: install a model file and everything is computed on this computer. Not validated for clinical use; the results must be reviewed.
+- **Auto-contour presets (0.7.7)**: pick head and neck, chest/lung, breast, abdomen or pelvis (male, female) to tick the organs at risk the model has (TG-263 names); those it lacks are listed separately. Save your own choice under a name; on the command line, `segment --preset`. The site lists are not a clinical protocol.
 - **Contour QA and places to look at**: naming rules, missing slices, overlaps, detached pieces, holes and more, listed finding by finding, with reports as HTML, CSV and PDF.
 - **In and out**: DICOM RTSTRUCT, DICOM SEG, NIfTI label maps, Slicer `.seg.nrrd`. Surfaces as STL, OBJ, PLY and VTK.
 - **Command-line tool** `orcaton-contour`: conversion, statistics, QA, pictures, editing, comparison, automatic contouring, batches. JSON output.
@@ -102,7 +104,7 @@ A desktop program for drawing and correcting contours on CT and other medical im
 - **Surgical video (0.7.0, early)**: step through MP4/MOV frame by frame, draw class masks, fill between, mark surgical phases, run the video QA and export PNG masks, phase CSVs and a manifest. The video file never leaves the computer.
 - **Video outline with a model (0.7.6, experimental)**: the vision model only points with a box; SAM 2.1 tiny (Meta, Apache-2.0), downloaded and installed by you, follows the object from frame to frame on this computer. If you drew a frame, it starts there. Accuracy varies a lot between videos, and every drawn frame is marked unreviewed.
 - **Assistant (0.6.0)**: ask a model API you set up yourself (hosted such as OpenAI, Anthropic (Claude) or OpenRouter, or Ollama / LM Studio on this computer) in Korean or English; it works through the editor's functions and shows its changes as a preview that applies only when you accept. Off by default.
-- **Working with an agent (0.6.0)**: share the case through a folder and run an AI agent you installed (Claude Code, Codex CLI …) in the terminal inside the program. Windows and macOS.
+- **Working with an agent (0.6.0)**: share the case through a folder and run an AI agent you installed (Claude Code, Codex CLI …) in the terminal inside the program. Windows, macOS and Linux (from 0.7.7).
 
 ### The first time you run it (sign in with an orcaton.com account)
 
